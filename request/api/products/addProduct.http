@@ -2,7 +2,7 @@ POST http://localhost:8080/api/products
 content-type: application/json
 
 {
-    "title": "elo",
+    "title": "asd",
     "price": 700,
     "thumbnail": "https://i.blogs.es/800731/captura-de-pantalla-2021-06-07-a-las-1.09.46/original.png"
 }

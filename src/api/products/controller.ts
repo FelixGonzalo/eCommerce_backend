@@ -1,5 +1,6 @@
 import express from 'express'
 const model = require('./model')
+import * as response from '../../network/response'
 
 const router = express.Router()
 router.get('/', getProducts)
@@ -8,52 +9,52 @@ router.post('/', validateProduct, addProduct)
 router.put('/:id', validateProduct, updateProduct)
 router.delete('/:id', deleteProductById)
 
-function getProducts(req, res) {
-  model.getAllProducts().then((products) => res.json({ products }))
+function getProducts(req, res, next) {
+  model
+    .getAllProducts()
+    .then((products) => response.success(req, res, products))
+    .catch(next)
 }
 
-function getProductById(req, res) {
+function getProductById(req, res, next) {
   const { id } = req.params
   model
     .getProductById(id)
-    .then((product) => res.json({ product }))
-    .catch((_) => res.json({ product: null }))
+    .then((product) => response.success(req, res, product))
+    .catch(next)
 }
 
-function addProduct(req, res) {
+function addProduct(req, res, next) {
   const { error } = req
   if (error && error.length > 0) {
-    return res.json({ error })
+    return response.error(req, res, error, 400)
   }
   const { title, price, thumbnail } = req.body
   model
     .addProduct({ title, price, thumbnail })
-    .then((productId) => res.json({ productId }))
-    .catch((_) => res.json({ productId: null }))
+    .then((productId) => response.success(req, res, { productId }, 201))
+    .catch(next)
 }
 
-function updateProduct(req, res) {
+function updateProduct(req, res, next) {
   const { id } = req.params
   const { error } = req
   if (error && error.length > 0) {
-    return res.json({ error })
+    return response.error(req, res, error, 400)
   }
   const { title, price, thumbnail } = req.body
   model
     .updateProductById({ id, title, price, thumbnail })
-    .then((productId) => res.json({ productId }))
-    .catch((error) => {
-      console.error(error)
-      res.json({ productId: null })
-    })
+    .then((productId) => response.success(req, res, { productId }))
+    .catch(next)
 }
 
-function deleteProductById(req, res) {
+function deleteProductById(req, res, next) {
   const { id } = req.params
   model
     .deleteProductById(id)
-    .then((id) => res.json({ idDeleted: id }))
-    .catch((_) => res.json({ idDeleted: null }))
+    .then((productId) => response.success(req, res, { productId }))
+    .catch(next)
 }
 
 function validateProduct(req, res, next) {
