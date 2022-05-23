@@ -1,0 +1,2 @@
+DELETE http://localhost:8080/api/products/3
+content-type: application/json

@@ -2,15 +2,12 @@ require('dotenv').config()
 import express from 'express'
 import config from '../config'
 import productsRouter from './api/products/controller'
+import { handleUnknownRoutes } from './api/network/errors'
 
 const app = express()
+app.use(express.json())
 app.use('/api/products', productsRouter)
-
-app.get('/', (req, res) => {
-  res.send({
-    message: 'Hello API',
-  })
-})
+app.use('*', handleUnknownRoutes)
 
 app.listen(config.API_PORT, () => {
   console.log(`Server open on PORT: ${config.API_PORT}`)
