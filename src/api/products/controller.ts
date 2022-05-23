@@ -1,13 +1,25 @@
 import express from 'express'
-const model = require('./model')
+import model from './model'
 import * as response from '../../network/response'
 
 const router = express.Router()
+router.post('/', validateProduct, addProduct)
 router.get('/', getProducts)
 router.get('/:id', getProductById)
-router.post('/', validateProduct, addProduct)
 router.put('/:id', validateProduct, updateProduct)
 router.delete('/:id', deleteProductById)
+
+function addProduct(req, res, next) {
+  const { error } = req
+  if (error && error.length > 0) {
+    return response.error(req, res, error, 400)
+  }
+  const { title, price, thumbnail } = req.body
+  model
+    .addProduct({ title, price, thumbnail })
+    .then((productId) => response.success(req, res, { productId }, 201))
+    .catch(next)
+}
 
 function getProducts(req, res, next) {
   model
@@ -21,18 +33,6 @@ function getProductById(req, res, next) {
   model
     .getProductById(id)
     .then((product) => response.success(req, res, product))
-    .catch(next)
-}
-
-function addProduct(req, res, next) {
-  const { error } = req
-  if (error && error.length > 0) {
-    return response.error(req, res, error, 400)
-  }
-  const { title, price, thumbnail } = req.body
-  model
-    .addProduct({ title, price, thumbnail })
-    .then((productId) => response.success(req, res, { productId }, 201))
     .catch(next)
 }
 

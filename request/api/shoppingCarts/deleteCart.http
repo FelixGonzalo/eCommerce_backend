@@ -1,0 +1,2 @@
+DELETE http://localhost:8080/api/shoppingCarts/1
+content-type: application/json
