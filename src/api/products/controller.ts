@@ -15,9 +15,17 @@ function addProduct(req, res, next) {
   if (error && error.length > 0) {
     return response.error(req, res, error, 400)
   }
-  const { title, price, thumbnail } = req.body
+  const { title, price, thumbnail, description, code, stock } = req.body
   model
-    .addProduct({ title, price, thumbnail })
+    .addProduct({
+      title,
+      price,
+      thumbnail,
+      description,
+      code,
+      stock,
+      timestamp: Date.now(),
+    })
     .then((productId) => response.success(req, res, { productId }, 201))
     .catch(next)
 }
@@ -43,9 +51,18 @@ function updateProduct(req, res, next) {
   if (error && error.length > 0) {
     return response.error(req, res, error, 400)
   }
-  const { title, price, thumbnail } = req.body
+  const { title, price, thumbnail, description, code, stock } = req.body
   model
-    .updateProductById({ id, title, price, thumbnail })
+    .updateProductById({
+      id,
+      title,
+      price,
+      thumbnail,
+      description,
+      code,
+      stock,
+      timestamp: Date.now(),
+    })
     .then((productId) => response.success(req, res, { productId }))
     .catch(next)
 }
@@ -59,11 +76,24 @@ function deleteProductById(req, res, next) {
 }
 
 function validateProduct(req, res, next) {
-  const { title, price, thumbnail } = req.body
-  if (!title || !price || !thumbnail || !title.trim() || !thumbnail.trim()) {
+  const { title, price, thumbnail, description, code, stock } = req.body
+  if (
+    !title ||
+    !price ||
+    !description ||
+    !code ||
+    !stock ||
+    !thumbnail ||
+    !title.trim() ||
+    !thumbnail.trim() ||
+    !description.trim() ||
+    !code.trim()
+  ) {
     req.error = 'faltan datos del producto'
   } else if (isNaN(price)) {
     req.error = 'El precio debe ser de tipo numérico'
+  } else if (isNaN(stock) || stock < 0) {
+    req.error = 'El stock debe ser de tipo numérico mayor o igual a 0'
   } else if (!thumbnail.includes('http')) {
     req.error = 'La URL de la foto debe iniciar con http'
   }

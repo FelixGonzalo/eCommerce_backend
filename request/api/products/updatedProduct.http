@@ -2,7 +2,10 @@ PUT http://localhost:8080/api/products/1
 content-type: application/json
 
 {
-    "title": "TV ultra pro",
+    "title": "TV ultra pro actualizado",
     "price": 700,
-    "thumbnail": "https://i.blogs.es/800731/captura-de-pantalla-2021-06-07-a-las-1.09.46/original.png"
+    "thumbnail": "https://i.blogs.es/800731/captura-de-pantalla-2021-06-07-a-las-1.09.46/original.png",
+    "description": "TV moderna",
+    "code": "asdj123",
+    "stock": 4
 }
