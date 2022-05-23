@@ -18,3 +18,12 @@ export function error(
     data: message,
   })
 }
+
+export function auth(req, res, status = 203) {
+  const messageTemplate = `route ${req.originalUrl} with method ${req.method} not authorized`
+  res.status(status).json({
+    error: false,
+    status,
+    data: messageTemplate,
+  })
+}

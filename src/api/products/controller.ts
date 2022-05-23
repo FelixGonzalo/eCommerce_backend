@@ -1,13 +1,14 @@
 import express from 'express'
 import model from './model'
 import * as response from '../../network/response'
+import { checkAuth } from '../../network/secure'
 
 const router = express.Router()
-router.post('/', validateProduct, addProduct)
+router.post('/', checkAuth('admin'), validateProduct, addProduct)
 router.get('/', getProducts)
 router.get('/:id', getProductById)
-router.put('/:id', validateProduct, updateProduct)
-router.delete('/:id', deleteProductById)
+router.put('/:id', checkAuth('admin'), validateProduct, updateProduct)
+router.delete('/:id', checkAuth('admin'), deleteProductById)
 
 function addProduct(req, res, next) {
   const { error } = req
