@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-module.exports = class Contenedor {
+module.exports = class FileContainer {
   constructor(nombreArchivo) {
     this.rutaArchivo = __dirname + `/${nombreArchivo}.txt`
     this.contID = 1

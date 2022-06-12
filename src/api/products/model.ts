@@ -1,4 +1,4 @@
-const Contenedor = require('../../store/contenedor')
+const Contenedor = require('../../store/containers/FileContainer')
 const productsDB = new Contenedor('products')
 
 function addProduct({

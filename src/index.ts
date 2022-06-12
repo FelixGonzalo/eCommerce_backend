@@ -12,7 +12,7 @@ const app = express()
 app.use(express.json())
 app.use('/api/products', productsRouter)
 app.use('/api/shoppingCarts', shoppingCartsRouter)
-app.use('/', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
+app.use('/api/documentation', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
 app.use(errorHandler)
 app.use('*', handleUnknownRoutes)
 

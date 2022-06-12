@@ -65,6 +65,16 @@
         "summary": "get a product by id",
         "description": "get a product by id",
         "operationId": "getProductById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of product to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -78,6 +88,14 @@
         "operationId": "updateProduct",
         "produces": ["application/json"],
         "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of product to update",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
           {
             "in": "body",
             "name": "body",
@@ -100,6 +118,16 @@
         "description": "delete a product by id",
         "operationId": "deleteProduct",
         "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of product to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -127,6 +155,16 @@
         "summary": "delete a shopping cart by id",
         "description": "delete a shopping cart by id",
         "operationId": "deleteShoppingCartById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of shopping cart to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -140,6 +178,16 @@
         "summary": "get a shopping cart by id",
         "description": "get a shopping cart by id",
         "operationId": "getShoppingCartById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of shopping cart to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -153,6 +201,24 @@
         "summary": "add a product to shopping cart",
         "description": "add a product to shopping cart",
         "operationId": "addProductFromShoppingCartById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of shopping cart to add new product",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "id_prod",
+            "in": "path",
+            "description": "ID of product to add",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -164,6 +230,24 @@
         "summary": "delete a product from shopping cart",
         "description": "delete a product from shopping cart",
         "operationId": "deleteProductFromShoppingCartById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of shopping cart to delete a product",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "id_prod",
+            "in": "path",
+            "description": "ID of product to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"

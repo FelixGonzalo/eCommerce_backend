@@ -11,6 +11,7 @@ Proyecto final de curso de backend con nodejs en Coderhouse.
 - API para manejar productos
 - API para manejar carrito de compras
 - Persistencia en archivos.txt
+- Documentación en /api/documentation
 
 ### Scripts
 

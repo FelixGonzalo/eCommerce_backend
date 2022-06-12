@@ -1,6 +1,7 @@
 import * as response from './response'
 
 export function handleUnknownRoutes(req, res) {
+  console.log('404 404')
   res.status(404).json({
     error: true,
     status: 404,

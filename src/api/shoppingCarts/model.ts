@@ -1,4 +1,4 @@
-const Contenedor = require('../../store/contenedor')
+const Contenedor = require('../../store/containers/FileContainer')
 const shoppingCartDB = new Contenedor('shoppingCarts')
 
 function addShoppingCartById() {

@@ -1,7 +1,7 @@
 {
   "name": "ecommerce",
   "version": "1.0.0",
-  "description": "",
+  "description": "eCommerce Backend es el proyecto final del curso de Backend con Nodejs en Coderhouse",
   "main": "dist/main.js",
   "scripts": {
     "build": "webpack",
