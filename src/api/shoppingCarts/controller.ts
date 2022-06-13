@@ -35,11 +35,10 @@ function deleteShoppingCartById(req, res, next) {
 
 async function addProductToShoppingCart(req, res, next) {
   const { id, id_prod } = req.params
-  const productId = parseInt(id_prod)
 
   try {
     const shoppingCart = await model.getShoppingCartById(id)
-    const product = await productModel.getProductById(productId)
+    const product = await productModel.getProductById(id_prod)
 
     if (!product) {
       return
@@ -47,7 +46,7 @@ async function addProductToShoppingCart(req, res, next) {
 
     let updatedProducts
     if (shoppingCart.products) {
-      const exists = shoppingCart.products.find((item) => item.id === productId)
+      const exists = shoppingCart.products.find((item) => item.id == id_prod)
       if (exists)
         return response.error(
           req,
@@ -73,7 +72,6 @@ async function addProductToShoppingCart(req, res, next) {
 
 async function deleteProductFromShoppinCart(req, res, next) {
   const { id, id_prod } = req.params
-  const productId = parseInt(id_prod)
 
   try {
     const shoppingCart = await model.getShoppingCartById(id)
@@ -83,7 +81,7 @@ async function deleteProductFromShoppinCart(req, res, next) {
     }
 
     const updatedProducts = shoppingCart.products.filter(
-      (item) => item.id !== productId
+      (item) => item.id != id_prod
     )
 
     const shoppingCartUpdated = await model.updateShoppingCart({

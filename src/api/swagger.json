@@ -71,8 +71,8 @@
             "in": "path",
             "description": "ID of product to return",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "string"
           }
         ],
         "responses": {
@@ -93,8 +93,8 @@
             "in": "path",
             "description": "ID of product to update",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "string"
           },
           {
             "in": "body",
@@ -124,8 +124,8 @@
             "in": "path",
             "description": "ID of product to delete",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "string"
           }
         ],
         "responses": {
@@ -161,8 +161,8 @@
             "in": "path",
             "description": "ID of shopping cart to delete",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "string"
           }
         ],
         "responses": {
@@ -184,8 +184,8 @@
             "in": "path",
             "description": "ID of shopping cart to return",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "string"
           }
         ],
         "responses": {
@@ -207,16 +207,16 @@
             "in": "path",
             "description": "ID of shopping cart to add new product",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "string"
           },
           {
             "name": "id_prod",
             "in": "path",
             "description": "ID of product to add",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "string"
           }
         ],
         "responses": {
@@ -236,16 +236,16 @@
             "in": "path",
             "description": "ID of shopping cart to delete a product",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "string"
           },
           {
             "name": "id_prod",
             "in": "path",
             "description": "ID of product to delete",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "string"
           }
         ],
         "responses": {

@@ -1,5 +1,4 @@
-const Contenedor = require('../../store/containers/FileContainer')
-const productsDB = new Contenedor('products')
+import { productDao } from '../../store/daos'
 
 function addProduct({
   title,
@@ -10,7 +9,7 @@ function addProduct({
   stock,
   timestamp,
 }) {
-  return productsDB.save({
+  return productDao.add({
     title,
     price,
     thumbnail,
@@ -22,11 +21,11 @@ function addProduct({
 }
 
 function getAllProducts() {
-  return productsDB.getAll()
+  return productDao.getAll()
 }
 
 function getProductById(id) {
-  return productsDB.getById(id)
+  return productDao.getById(id)
 }
 
 function updateProductById({
@@ -39,7 +38,7 @@ function updateProductById({
   stock,
   timestamp,
 }) {
-  return productsDB.updateById({
+  return productDao.updateById({
     id,
     title,
     price,
@@ -52,7 +51,7 @@ function updateProductById({
 }
 
 function deleteProductById(id) {
-  return productsDB.deleteById(id)
+  return productDao.deleteById(id)
 }
 
 export default {

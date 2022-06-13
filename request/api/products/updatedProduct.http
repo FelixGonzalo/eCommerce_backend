@@ -1,8 +1,8 @@
-PUT http://localhost:8080/api/products/1
+PUT http://localhost:8080/api/products/62a752f1d259cb2419e2e14b
 content-type: application/json
 
 {
-    "title": "TV ultra pro actualizado",
+    "title": "peluche coffe actualizado",
     "price": 700,
     "thumbnail": "https://i.blogs.es/800731/captura-de-pantalla-2021-06-07-a-las-1.09.46/original.png",
     "description": "TV moderna",

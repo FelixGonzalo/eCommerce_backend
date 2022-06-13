@@ -8,6 +8,7 @@ import { errorHandler } from './network/errors'
 import swaggerUI from 'swagger-ui-express'
 const swaggerDoc = require('./api/swagger.json')
 
+import './store/mongoDb/connection' // connect to MongoDB
 const app = express()
 app.use(express.json())
 app.use('/api/products', productsRouter)
