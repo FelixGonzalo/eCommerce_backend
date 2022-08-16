@@ -1,0 +1,12 @@
+POST http://localhost:8080/api/auth/register
+content-type: application/json
+
+{
+    "email": "adaline.corkery@ethereal.email",
+    "password": "123456",
+    "name": "usuario adaline",
+    "address": "address example",
+    "age": "23",
+    "phone": "+51 987654321",
+    "photo": "photo url"
+}
