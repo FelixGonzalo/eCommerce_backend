@@ -1,0 +1,333 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Primera entrega del proyecto final del curso de Backend con Nodejs en Coderhouse. GitHub: https://github.com/FelixGonzalo/eCommerce_backend",
+    "version": "0.1.0",
+    "title": "eCommerce Backend "
+  },
+  "host": "localhost:8080",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "tags": [
+    {
+      "name": "products",
+      "description": "Manage products"
+    },
+    {
+      "name": "shoppingCarts",
+      "description": "Manage shopping carts"
+    }
+  ],
+  "paths": {
+    "/products": {
+      "post": {
+        "tags": ["products"],
+        "summary": "add product",
+        "description": "add product",
+        "operationId": "addProduct",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "product object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product_variant1"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": ["products"],
+        "summary": "get all products",
+        "description": "get all products",
+        "operationId": "getAllProducts",
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": ["products"],
+        "summary": "get a product by id",
+        "description": "get a product by id",
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of product to return",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "put": {
+        "tags": ["products"],
+        "summary": "update a product by id",
+        "description": "update a product by id",
+        "operationId": "updateProduct",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of product to update",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "product object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product_variant1"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["products"],
+        "summary": "delete a product by id",
+        "description": "delete a product by id",
+        "operationId": "deleteProduct",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of product to delete",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/shoppingCarts": {
+      "post": {
+        "tags": ["shoppingCarts"],
+        "summary": "add a shopping cart",
+        "description": "add a shopping cart",
+        "operationId": "addShoppingCart",
+        "produces": ["application/json"],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/shoppingCarts/{id}": {
+      "delete": {
+        "tags": ["shoppingCarts"],
+        "summary": "delete a shopping cart by id",
+        "description": "delete a shopping cart by id",
+        "operationId": "deleteShoppingCartById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of shopping cart to delete",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/shoppingCarts/{id}/products": {
+      "get": {
+        "tags": ["shoppingCarts"],
+        "summary": "get a shopping cart by id",
+        "description": "get a shopping cart by id",
+        "operationId": "getShoppingCartById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of shopping cart to return",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/shoppingCarts/{id}/products/{id_prod}": {
+      "post": {
+        "tags": ["shoppingCarts"],
+        "summary": "add a product to shopping cart",
+        "description": "add a product to shopping cart",
+        "operationId": "addProductFromShoppingCartById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of shopping cart to add new product",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "id_prod",
+            "in": "path",
+            "description": "ID of product to add",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["shoppingCarts"],
+        "summary": "delete a product from shopping cart",
+        "description": "delete a product from shopping cart",
+        "operationId": "deleteProductFromShoppingCartById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of shopping cart to delete a product",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "id_prod",
+            "in": "path",
+            "description": "ID of product to delete",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "title": {
+          "type": "string",
+          "example": "TV"
+        },
+        "description": {
+          "type": "string",
+          "example": "TV ultra pro"
+        },
+        "code": {
+          "type": "string",
+          "example": "asdf32"
+        },
+        "thumbnail": {
+          "type": "string",
+          "example": "https://i.blogs.es/800731/captura-de-pantalla-2021-06-07-a-las-1.09.46/original.png"
+        },
+        "stock": {
+          "type": "number",
+          "example": 12
+        },
+        "price": {
+          "type": "number",
+          "example": 750.5
+        }
+      }
+    },
+    "shoppingCart": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "product": {
+          "type": "Array<Product>"
+        }
+      }
+    },
+    "Product_variant1": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "TV"
+        },
+        "description": {
+          "type": "string",
+          "example": "TV ultra pro"
+        },
+        "code": {
+          "type": "string",
+          "example": "asdf32"
+        },
+        "thumbnail": {
+          "type": "string",
+          "example": "https://i.blogs.es/800731/captura-de-pantalla-2021-06-07-a-las-1.09.46/original.png"
+        },
+        "stock": {
+          "type": "number",
+          "example": 12
+        },
+        "price": {
+          "type": "number",
+          "example": 750.5
+        }
+      }
+    }
+  }
+}
