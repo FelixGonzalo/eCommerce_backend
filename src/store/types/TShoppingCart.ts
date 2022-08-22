@@ -8,4 +8,5 @@ export type TShoppingCart = {
     email: string
     name: string
   }
+  status?: string
 }

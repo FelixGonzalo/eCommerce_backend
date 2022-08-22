@@ -5,8 +5,8 @@ function addShoppingCartById({ user }: TShoppingCart) {
   return shoppingCartDao.add({ products: [], user })
 }
 
-function updateShoppingCart({ id, products, user }: TShoppingCart) {
-  return shoppingCartDao.updateById({ id, products, user })
+function updateShoppingCart({ id, products }: TShoppingCart) {
+  return shoppingCartDao.updateById({ id, products })
 }
 
 function getShoppingCartById(id: string) {
@@ -17,9 +17,14 @@ function deleteShoppingCartById(id: string) {
   return shoppingCartDao.deleteById(id)
 }
 
+function updateStatusFromShoppingCart({ id, status }: TShoppingCart) {
+  return shoppingCartDao.updateById({ id, status })
+}
+
 export default {
   getShoppingCartById,
   updateShoppingCart,
   addShoppingCartById,
   deleteShoppingCartById,
+  updateStatusFromShoppingCart,
 }

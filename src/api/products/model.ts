@@ -53,10 +53,15 @@ function deleteProductById(id: string) {
   return productDao.deleteById(id)
 }
 
+function getProductsByIds(ids: string[]) {
+  return productDao.getByIds(ids)
+}
+
 export default {
   addProduct,
   getAllProducts,
   getProductById,
   updateProductById,
   deleteProductById,
+  getProductsByIds,
 }

@@ -4,6 +4,7 @@ import { productSchema } from './Product'
 import { userSchema } from './User'
 
 const ShoppingCartSchema = new Schema<TShoppingCart>({
+  status: String,
   products: [productSchema],
   user: userSchema,
 })
