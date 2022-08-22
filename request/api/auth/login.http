@@ -1,7 +1,0 @@
-POST http://localhost:8080/api/auth/login
-content-type: application/json
-
-{
-    "email": "usuario_test_155@mailinator.com",
-    "password": "123456"
-}

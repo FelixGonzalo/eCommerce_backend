@@ -1,3 +1,0 @@
-
-GET http://localhost:8080/api/shoppingCarts/1/products
-content-type: application/json
