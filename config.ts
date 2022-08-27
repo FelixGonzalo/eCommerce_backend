@@ -9,4 +9,7 @@ export default {
   EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || '',
   EMAIL_ADMIN: process.env.EMAIL_ADMIN || '',
   SECRET_KEYWORD: process.env.SECRET_KEYWORD || '',
+  WHATSAPP_SID: process.env.WHATSAPP_SID || '',
+  WHATSAPP_TOKEN: process.env.WHATSAPP_TOKEN || '',
+  WHATSAPP_FROM: process.env.WHATSAPP_FROM || '',
 }

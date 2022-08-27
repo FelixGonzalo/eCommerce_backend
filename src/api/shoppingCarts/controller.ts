@@ -4,6 +4,7 @@ import model from './model'
 import productModel from '../products/model'
 import { checkAuth, getUserFromToken } from '../../network/secure'
 import { sendMailToAdmin } from '../../services/email/sendMail'
+import { sendWhatsappMessage } from '../../services/whatsapp/sendWhatsappMessage'
 
 const router = express.Router()
 router.post('/', getUserFromToken, checkAuth('user'), addShoppingCart)
@@ -121,7 +122,6 @@ async function deleteProductFromShoppinCart(req, res, next) {
 
 async function sellShoppingCart(req, res, next) {
   // update product stock (pending management of several units per product)
-  // whatsapp message
 
   try {
     const { id } = req.params
@@ -173,6 +173,8 @@ async function sellShoppingCart(req, res, next) {
     sendMailToAdmin(subject, message).then(() =>
       console.log(`Correo enviado: ${subject}`)
     )
+
+    if (req.user.phone) sendWhatsappMessage(req.user.phone, subject).then(() => console.log(`WhatsApp enviado: ${subject}`))
 
     response.success(req, res, shoppingCart)
   } catch (error) {
