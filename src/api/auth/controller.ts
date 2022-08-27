@@ -83,6 +83,7 @@ function createUserToken(user) {
       id: user._id,
       email: user.email,
       name: user.name,
+      phone: user.phone,
       type: user.type,
     },
     config.SECRET_KEYWORD,
