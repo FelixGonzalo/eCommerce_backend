@@ -6,14 +6,17 @@ import * as response from '../../network/response'
 import config from '../../../config'
 import { validateLogin, validateRegister } from './validation'
 import { sendMailToAdmin } from '../../services/email/sendMail'
+import { uploadImage } from '../../services/storage/storage'
 
 const router = express.Router()
-router.post('/register', validateRegister, register)
+router.post('/register', uploadImage.single('photo'), validateRegister, register)
 router.post('/login', validateLogin, login)
 
 async function register(req, res, next) {
   try {
     const { email, password, name, address, age, phone, photo } = req.body
+    const { filename } = req.file ? req.file : { filename: undefined }
+
     const passwordHash = await bcrypt.hash(password, 2)
 
     const user = await model.addUser({
@@ -23,7 +26,7 @@ async function register(req, res, next) {
       address,
       age,
       phone,
-      photo,
+      photo: filename,
       type: 'user',
     })
 
@@ -68,6 +71,7 @@ async function login(req, res, next) {
       {
         email: user.email,
         name: user.name,
+        photo: `${req.protocol}://${req.get('host')}/public/${user.photo}`,
         token,
       },
       200

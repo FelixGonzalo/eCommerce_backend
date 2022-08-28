@@ -14,12 +14,14 @@ const swaggerDoc = require('./api/swagger.json')
 
 const app = express()
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use('/public', express.static(__dirname + '/storage'))
 app.use('/api/auth', authRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/shoppingCarts', shoppingCartsRouter)
 app.use('/api/documentation', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
 app.use(errorHandler)
-app.use('*', handleUnknownRoutes)
+// app.use('*', handleUnknownRoutes)
 
 app.listen(config.API_PORT, () => {
   console.log(`Server open on PORT: ${config.API_PORT}`)
