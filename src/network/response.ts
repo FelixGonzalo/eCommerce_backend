@@ -1,7 +1,6 @@
 import logger from "../logger"
 
 export function success(req, res, data, status = 200) {
-  logger.info(`[${status}] ${JSON.stringify(data)}`)
   res.status(status).json({
     error: false,
     status,

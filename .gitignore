@@ -3,6 +3,7 @@
 
 request/
 storage/
+build/
 
 ### Node ###
 # Logs
