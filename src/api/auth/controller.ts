@@ -1,18 +1,12 @@
-import express from 'express'
+import { NextFunction, Request, Response } from 'express'
 import model from './model'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import * as response from '../../network/response'
 import config from '../../../config'
-import { validateLogin, validateRegister } from './validation'
 import { sendMailToAdmin } from '../../services/email/sendMail'
-import { uploadImage } from '../../services/storage/storage'
 
-const router = express.Router()
-router.post('/register', uploadImage.single('photo'), validateRegister, register)
-router.post('/login', validateLogin, login)
-
-async function register(req, res, next) {
+export async function register (req: Request, res: Response, next: NextFunction) {
   try {
     const { email, password, name, address, age, phone, photo } = req.body
     const { filename } = req.file ? req.file : { filename: undefined }
@@ -52,7 +46,7 @@ async function register(req, res, next) {
   }
 }
 
-async function login(req, res, next) {
+export async function login (req: Request, res: Response, next: NextFunction) {
   try {
     const { email, password } = req.body
     const user = await model.getUserByEmail(email)
@@ -98,5 +92,3 @@ function createUserToken(user) {
 
   return token
 }
-
-export default router

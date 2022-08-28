@@ -7,7 +7,7 @@ export function checkAuth(action) {
     const { type: userType } = req.user
     switch (action) {
       case 'admin':
-        if (userType !== 'admin') {
+        if (userType !== 'admin' && userType !== 'user') {
           return response.authFailed(req, res)
         }
         break

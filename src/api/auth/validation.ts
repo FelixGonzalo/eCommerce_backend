@@ -1,10 +1,11 @@
 import model from './model'
 import * as response from '../../network/response'
+import { NextFunction, Request, Response } from 'express'
 
 const emailRegex =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 
-async function validateRegister(req, res, next) {
+async function validateRegister(req: Request, res: Response, next: NextFunction) {
   const { email, password, age } = req.body
   if (!email || !password || !email.trim() || !password.trim())
     return response.error(req, res, 'Es necesario el email y el password', 400)
@@ -38,7 +39,7 @@ async function validateRegister(req, res, next) {
   next()
 }
 
-function validateLogin(req, res, next) {
+function validateLogin(req: Request, res: Response, next: NextFunction) {
   const { email, password } = req.body
   if (!email || !password || !email.trim() || !password.trim())
     return response.error(req, res, 'Es necesario el email y el password', 400)

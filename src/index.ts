@@ -4,13 +4,13 @@ import './store/mongoDb/connection' // connect to MongoDB
 
 import express from 'express'
 import config from '../config'
-import authRouter from './api/auth/controller'
-import productsRouter from './api/products/controller'
-import shoppingCartsRouter from './api/shoppingCarts/controller'
+import authRouter from './api/auth/routes'
+import productsRouter from './api/products/routes'
+import shoppingCartsRouter from './api/shoppingCarts/routes'
 import { handleUnknownRoutes } from './network/errors'
 import { errorHandler } from './network/errors'
 import swaggerUI from 'swagger-ui-express'
-const swaggerDoc = require('./api/swagger.json')
+const swaggerDoc = require('./swagger.json')
 import cluster from 'cluster'
 import os from 'os'
 
@@ -33,11 +33,11 @@ if (config.API_CLUSTER && cluster.isPrimary) {
   const app = express()
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
-  app.use('/public', express.static(__dirname + '/storage'))
+  app.use('/public', express.static('storage'))
   app.use('/api/auth', authRouter)
   app.use('/api/products', productsRouter)
   app.use('/api/shoppingCarts', shoppingCartsRouter)
-  app.use('/api/documentation', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
+  app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
   app.use(errorHandler)
   app.use('*', handleUnknownRoutes)
 

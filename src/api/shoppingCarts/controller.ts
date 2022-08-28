@@ -1,48 +1,18 @@
-import express from 'express'
+import { NextFunction, Request, Response } from 'express'
 import * as response from '../../network/response'
 import model from './model'
 import productModel from '../products/model'
-import { checkAuth, getUserFromToken } from '../../network/secure'
 import { sendMailToAdmin } from '../../services/email/sendMail'
 import { sendWhatsappMessage } from '../../services/whatsapp/sendWhatsappMessage'
 
-const router = express.Router()
-router.post('/', getUserFromToken, checkAuth('user'), addShoppingCart)
-router.delete(
-  '/:id',
-  getUserFromToken,
-  checkAuth('user'),
-  deleteShoppingCartById
-)
-router.get(
-  '/:id/products',
-  getUserFromToken,
-  checkAuth('user'),
-  getShoppingCartById
-)
-router.patch(
-  '/:id/products/:id_prod',
-  getUserFromToken,
-  checkAuth('user'),
-  addProductToShoppingCart
-)
-router.delete(
-  '/:id/products/:id_prod',
-  getUserFromToken,
-  checkAuth('user'),
-  deleteProductFromShoppinCart
-)
-router.patch('/:id/sell', getUserFromToken, checkAuth('user'), sellShoppingCart)
-
-function addShoppingCart(req, res, next) {
-  console.log('user', req.user)
+export function addShoppingCart(req: Request, res: Response, next: NextFunction) {
   model
-    .addShoppingCartById({ user: req.user })
+    .addShoppingCartById({ user: req["user"] })
     .then((shoppingCart) => response.success(req, res, shoppingCart))
     .catch(next)
 }
 
-function getShoppingCartById(req, res, next) {
+export function getShoppingCartById(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params
   model
     .getShoppingCartById(id)
@@ -50,7 +20,7 @@ function getShoppingCartById(req, res, next) {
     .catch(next)
 }
 
-function deleteShoppingCartById(req, res, next) {
+export function deleteShoppingCartById(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params
   model
     .deleteShoppingCartById(id)
@@ -58,7 +28,7 @@ function deleteShoppingCartById(req, res, next) {
     .catch(next)
 }
 
-async function addProductToShoppingCart(req, res, next) {
+export async function addProductToShoppingCart(req: Request, res: Response, next: NextFunction) {
   const { id, id_prod } = req.params
 
   try {
@@ -95,7 +65,7 @@ async function addProductToShoppingCart(req, res, next) {
   }
 }
 
-async function deleteProductFromShoppinCart(req, res, next) {
+export async function deleteProductFromShoppinCart(req: Request, res: Response, next: NextFunction) {
   const { id, id_prod } = req.params
 
   try {
@@ -120,7 +90,7 @@ async function deleteProductFromShoppinCart(req, res, next) {
   }
 }
 
-async function sellShoppingCart(req, res, next) {
+export async function sellShoppingCart(req: Request, res: Response, next: NextFunction) {
   // update product stock (pending management of several units per product)
 
   try {
@@ -160,8 +130,8 @@ async function sellShoppingCart(req, res, next) {
     })
 
     const subject = `Nuevo pedido de ${
-      req.user.name || 'desconocido'
-    } con email ${req.user.email || 'desconocido'}`
+      req["user"].name || 'desconocido'
+    } con email ${req["user"].email || 'desconocido'}`
 
     const message = `productos del carrito: ${shoppingCartSold?.products?.map(
       (product, index) =>
@@ -174,12 +144,10 @@ async function sellShoppingCart(req, res, next) {
       console.log(`Correo enviado: ${subject}`)
     )
 
-    if (req.user.phone) sendWhatsappMessage(req.user.phone, subject).then(() => console.log(`WhatsApp enviado: ${subject}`))
+    if (req["user"].phone) sendWhatsappMessage(req["user"].phone, subject).then(() => console.log(`WhatsApp enviado: ${subject}`))
 
     response.success(req, res, shoppingCart)
   } catch (error) {
     next(error)
   }
 }
-
-export default router
