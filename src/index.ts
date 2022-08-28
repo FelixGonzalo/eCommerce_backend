@@ -13,26 +13,31 @@ import swaggerUI from 'swagger-ui-express'
 const swaggerDoc = require('./swagger.json')
 import cluster from 'cluster'
 import os from 'os'
+import cors from 'cors'
+import logger from './logger'
+import morgan from 'morgan'
 
 if (config.API_CLUSTER && cluster.isPrimary) {
   const numCpus = os.cpus().length
 
-  console.log('SERVIDOR MAESTRO DEL CLUSTER: ')
-  console.log('Número de procesadores: ' + numCpus)
-  console.log('PID:' + process.pid)
+  logger.info('SERVIDOR MAESTRO DEL CLUSTER: ')
+  logger.info('Número de procesadores: ' + numCpus)
+  logger.info('PID:' + process.pid)
 
   for (let i = 0; i < numCpus; i++) {
     cluster.fork()
   }
 
   cluster.on('exit', worker => {
-    console.log('Worker ' + process.pid + ' exit')
+    logger.info('Worker ' + process.pid + ' exit')
     cluster.fork()
   })
 } else {
   const app = express()
+  app.use(cors())
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
+  app.use(morgan("combined", { stream: { write: message => logger.info(message.trim()) }}));
   app.use('/public', express.static('storage'))
   app.use('/api/auth', authRouter)
   app.use('/api/products', productsRouter)
@@ -42,6 +47,6 @@ if (config.API_CLUSTER && cluster.isPrimary) {
   app.use('*', handleUnknownRoutes)
 
   app.listen(config.API_PORT, () => {
-    console.log(`Server open on PORT: ${config.API_PORT} - PID(${process.pid}) - (${new Date().toLocaleString()})`)
+    logger.info(`Server open on PORT: ${config.API_PORT} - PID(${process.pid}) - (${new Date().toLocaleString()})`)
   })
 }

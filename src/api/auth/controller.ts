@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import * as response from '../../network/response'
 import config from '../../../config'
 import { sendMailToAdmin } from '../../services/email/sendMail'
+import logger from '../../logger'
 
 export async function register (req: Request, res: Response, next: NextFunction) {
   try {
@@ -27,7 +28,7 @@ export async function register (req: Request, res: Response, next: NextFunction)
     sendMailToAdmin(
       'Nuevo registro',
       `email: ${email}, name: ${name}, address: ${address}, age: ${age}, phone: ${phone}, photo: ${photo}`
-    ).then(() => console.log('correo enviado: Nuevo registro ' + email))
+    ).then(() => logger.info('correo enviado: Nuevo registro ' + email))
 
     const token = createUserToken(user)
 

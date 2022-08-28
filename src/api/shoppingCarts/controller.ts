@@ -4,6 +4,7 @@ import model from './model'
 import productModel from '../products/model'
 import { sendMailToAdmin } from '../../services/email/sendMail'
 import { sendWhatsappMessage } from '../../services/whatsapp/sendWhatsappMessage'
+import logger from '../../logger'
 
 export function addShoppingCart(req: Request, res: Response, next: NextFunction) {
   model
@@ -140,11 +141,11 @@ export async function sellShoppingCart(req: Request, res: Response, next: NextFu
         }`
     )}`
 
-    sendMailToAdmin(subject, message).then(() =>
-      console.log(`Correo enviado: ${subject}`)
-    )
+    sendMailToAdmin(subject, message).then(() => logger.info((`Correo enviado: ${subject}`)))
 
-    if (req["user"].phone) sendWhatsappMessage(req["user"].phone, subject).then(() => console.log(`WhatsApp enviado: ${subject}`))
+    if (req["user"].phone) {
+      sendWhatsappMessage(req["user"].phone, subject).then(() => logger.info((`WhatsApp enviado: ${subject}`)))
+    }
 
     response.success(req, res, shoppingCart)
   } catch (error) {

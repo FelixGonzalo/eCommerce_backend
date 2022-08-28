@@ -1,5 +1,6 @@
 import twilio from 'twilio'
 import config from '../../../config'
+import logger from '../../logger'
 
 const ACCOUNT_SID = config.WHATSAPP_SID
 const AUTH_TOKEN = config.WHATSAPP_TOKEN
@@ -17,6 +18,6 @@ export const sendWhatsappMessage = async (phone: string, messageBody: string) =>
     })
     return info
   } catch (error) {
-    console.log(error)
+    logger.warning(error)
   }
 }
