@@ -5,7 +5,6 @@ import './store/mongoDb/connection' // connect to MongoDB
 import express from 'express'
 import config from '../config'
 import authRouter from './api/auth/routes'
-import productsRouter from './api/products/routes'
 import shoppingCartsRouter from './api/shoppingCarts/routes'
 import { handleUnknownRoutes } from './network/errors'
 import { errorHandler } from './network/errors'
@@ -16,6 +15,7 @@ import os from 'os'
 import cors from 'cors'
 import logger from './logger'
 import morgan from 'morgan'
+import routes from './routes/index'
 
 if (config.API_CLUSTER && cluster.isPrimary) {
   const numCpus = os.cpus().length
@@ -28,7 +28,7 @@ if (config.API_CLUSTER && cluster.isPrimary) {
     cluster.fork()
   }
 
-  cluster.on('exit', worker => {
+  cluster.on('exit', (worker) => {
     logger.info('Worker ' + process.pid + ' exit')
     cluster.fork()
   })
@@ -37,16 +37,24 @@ if (config.API_CLUSTER && cluster.isPrimary) {
   app.use(cors())
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
-  app.use(morgan("combined", { stream: { write: message => logger.info(message.trim()) }}));
+  app.use(
+    morgan('combined', {
+      stream: { write: (message) => logger.info(message.trim()) },
+    })
+  )
   app.use('/public', express.static('storage'))
   app.use('/api/auth', authRouter)
-  app.use('/api/products', productsRouter)
   app.use('/api/shoppingCarts', shoppingCartsRouter)
+  app.use('/api', routes)
   app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
   app.use(errorHandler)
   app.use('*', handleUnknownRoutes)
 
   app.listen(config.API_PORT, () => {
-    logger.info(`Server open on PORT: ${config.API_PORT} - PID(${process.pid}) - (${new Date().toLocaleString()})`)
+    logger.info(
+      `Server open on PORT: ${config.API_PORT} - PID(${
+        process.pid
+      }) - (${new Date().toLocaleString()})`
+    )
   })
 }

@@ -1,8 +1,7 @@
-import logger from "../logger"
+import logger from '../logger'
 
 export function success(req, res, data, status = 200) {
   res.status(status).json({
-    error: false,
     status,
     data,
   })
@@ -16,9 +15,9 @@ export function error(
 ) {
   logger.error(`[${status}] ${message}`)
   res.status(status).json({
-    error: true,
+    error: message,
     status,
-    data: message,
+    data: null,
   })
 }
 

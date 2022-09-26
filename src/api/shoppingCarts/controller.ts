@@ -1,19 +1,27 @@
 import { NextFunction, Request, Response } from 'express'
 import * as response from '../../network/response'
 import model from './model'
-import productModel from '../products/model'
+// import productModel from '../products/model'
 import { sendMailToAdmin } from '../../services/email/sendMail'
 import { sendWhatsappMessage } from '../../services/whatsapp/sendWhatsappMessage'
 import logger from '../../logger'
 
-export function addShoppingCart(req: Request, res: Response, next: NextFunction) {
+export function addShoppingCart(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   model
-    .addShoppingCartById({ user: req["user"] })
+    .addShoppingCartById({ user: req['user'] })
     .then((shoppingCart) => response.success(req, res, shoppingCart))
     .catch(next)
 }
 
-export function getShoppingCartById(req: Request, res: Response, next: NextFunction) {
+export function getShoppingCartById(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { id } = req.params
   model
     .getShoppingCartById(id)
@@ -21,7 +29,11 @@ export function getShoppingCartById(req: Request, res: Response, next: NextFunct
     .catch(next)
 }
 
-export function deleteShoppingCartById(req: Request, res: Response, next: NextFunction) {
+export function deleteShoppingCartById(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { id } = req.params
   model
     .deleteShoppingCartById(id)
@@ -29,12 +41,17 @@ export function deleteShoppingCartById(req: Request, res: Response, next: NextFu
     .catch(next)
 }
 
-export async function addProductToShoppingCart(req: Request, res: Response, next: NextFunction) {
+export async function addProductToShoppingCart(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { id, id_prod } = req.params
 
   try {
     const shoppingCart = await model.getShoppingCartById(id)
-    const product = await productModel.getProductById(id_prod)
+    // const product = await productModel.getProductById(id_prod)
+    const product = null
 
     if (!product) {
       return
@@ -66,7 +83,11 @@ export async function addProductToShoppingCart(req: Request, res: Response, next
   }
 }
 
-export async function deleteProductFromShoppinCart(req: Request, res: Response, next: NextFunction) {
+export async function deleteProductFromShoppinCart(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { id, id_prod } = req.params
 
   try {
@@ -91,7 +112,11 @@ export async function deleteProductFromShoppinCart(req: Request, res: Response, 
   }
 }
 
-export async function sellShoppingCart(req: Request, res: Response, next: NextFunction) {
+export async function sellShoppingCart(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   // update product stock (pending management of several units per product)
 
   try {
@@ -119,11 +144,12 @@ export async function sellShoppingCart(req: Request, res: Response, next: NextFu
     }
 
     const productIds: any = products.map((product) => product.id)
-    const currentProducts = await productModel.getProductsByIds(productIds)
-    const noStock = currentProducts.find((product) => product.stock === 0)
-    if (noStock) {
-      return response.error(req, res, 'No hay stock para los productos', 400)
-    }
+    // const currentProducts = await productModel.getProductsByIds(productIds)
+    // const currentProducts = []
+    // const noStock = currentProducts.find((product) => product.stock === 0)
+    // if (noStock) {
+    //   return response.error(req, res, 'No hay stock para los productos', 400)
+    // }
 
     const shoppingCartSold = await model.updateStatusFromShoppingCart({
       id,
@@ -131,8 +157,8 @@ export async function sellShoppingCart(req: Request, res: Response, next: NextFu
     })
 
     const subject = `Nuevo pedido de ${
-      req["user"].name || 'desconocido'
-    } con email ${req["user"].email || 'desconocido'}`
+      req['user'].name || 'desconocido'
+    } con email ${req['user'].email || 'desconocido'}`
 
     const message = `productos del carrito: ${shoppingCartSold?.products?.map(
       (product, index) =>
@@ -141,10 +167,14 @@ export async function sellShoppingCart(req: Request, res: Response, next: NextFu
         }`
     )}`
 
-    sendMailToAdmin(subject, message).then(() => logger.info((`Correo enviado: ${subject}`)))
+    sendMailToAdmin(subject, message).then(() =>
+      logger.info(`Correo enviado: ${subject}`)
+    )
 
-    if (req["user"].phone) {
-      sendWhatsappMessage(req["user"].phone, subject).then(() => logger.info((`WhatsApp enviado: ${subject}`)))
+    if (req['user'].phone) {
+      sendWhatsappMessage(req['user'].phone, subject).then(() =>
+        logger.info(`WhatsApp enviado: ${subject}`)
+      )
     }
 
     response.success(req, res, shoppingCart)
