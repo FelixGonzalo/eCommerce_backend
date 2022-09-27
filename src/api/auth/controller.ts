@@ -7,7 +7,11 @@ import config from '../../../config'
 import { sendMailToAdmin } from '../../services/email/sendMail'
 import logger from '../../logger'
 
-export async function register (req: Request, res: Response, next: NextFunction) {
+export async function register(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const { email, password, name, address, age, phone, photo } = req.body
     const { filename } = req.file ? req.file : { filename: undefined }
@@ -47,12 +51,13 @@ export async function register (req: Request, res: Response, next: NextFunction)
   }
 }
 
-export async function login (req: Request, res: Response, next: NextFunction) {
+export async function login(req: Request, res: Response, next: NextFunction) {
   try {
     const { email, password } = req.body
     const user = await model.getUserByEmail(email)
 
-    if (!user) return response.error(req, res, 'Credenciales incorrectas', 401)
+    if (!user || !user.password)
+      return response.error(req, res, 'Credenciales incorrectas', 401)
 
     const isCorrectPassword = await bcrypt.compare(password, user.password)
     if (!isCorrectPassword)

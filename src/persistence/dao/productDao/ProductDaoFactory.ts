@@ -1,18 +1,18 @@
 import ProductDaoMemory from './ProductDaoMemory'
 import ProductDaoMongo from './ProductDaoMongo'
 
-const option = 'Mongo'
+const option = 'Memory'
 let dao: ProductDaoMemory | ProductDaoMongo
 
 switch (option) {
-  case 'Mongo':
-    dao = new ProductDaoMongo()
-    dao.init()
-    break
-  // case 'Memory':
-  //   dao = new ProductDaoMemory()
+  // case 'Mongo':
+  //   dao = new ProductDaoMongo()
   //   dao.init()
   //   break
+  case 'Memory':
+    dao = new ProductDaoMemory()
+    dao.init()
+    break
   default:
     dao = new ProductDaoMemory()
     dao.init()
