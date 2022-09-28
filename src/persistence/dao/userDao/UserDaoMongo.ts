@@ -1,6 +1,10 @@
 import mongoose, { Schema, model } from 'mongoose'
 import { UserDataType, UserEditType, UserType } from '../../../types/UserType'
-import { userDtoForMongo, usersDtoForMongo } from '../../dto/userDto'
+import {
+  userDtoForMongo,
+  userProfilesDtoForMongo,
+  userProfileDtoForMongo,
+} from '../../dto/userDto'
 
 export default class UserDaoMongo {
   UserModel: mongoose.Model<UserType, {}, {}, {}>
@@ -30,7 +34,7 @@ export default class UserDaoMongo {
   async getAll() {
     try {
       const users = await this.UserModel.find()
-      return usersDtoForMongo(users)
+      return userProfilesDtoForMongo(users)
     } catch (error) {
       throw error
     }
@@ -40,7 +44,16 @@ export default class UserDaoMongo {
     try {
       const user = await this.UserModel.findOne({ _id: id })
       if (!user) throw new Error('The user does not exist')
-      return userDtoForMongo(user)
+      return userProfileDtoForMongo(user)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getByEmailForAuth(email: string) {
+    try {
+      const user = await this.UserModel.findOne({ email })
+      return user ? userDtoForMongo(user) : user
     } catch (error) {
       throw error
     }
@@ -50,7 +63,7 @@ export default class UserDaoMongo {
     try {
       const User = new this.UserModel<UserDataType>(obj)
       const user = await User.save()
-      return userDtoForMongo(user)
+      return userProfileDtoForMongo(user)
     } catch (error) {
       throw error
     }
@@ -60,7 +73,7 @@ export default class UserDaoMongo {
     try {
       const user = await this.UserModel.findByIdAndUpdate(id, newObj)
       if (!user) throw new Error('The user does not exist')
-      return userDtoForMongo({
+      return userProfileDtoForMongo({
         id,
         email: user.email,
         ...newObj,

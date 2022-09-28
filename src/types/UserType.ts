@@ -37,3 +37,8 @@ export type UserProfileType = {
   photo: string
   type: userType
 }
+
+export type UserAuthType = {
+  email: string
+  password: string
+}

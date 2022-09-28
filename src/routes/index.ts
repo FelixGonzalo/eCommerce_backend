@@ -4,11 +4,15 @@ import productController from '../controllers/productController'
 import userValidator from '../middleware/validators/userValidator'
 import productValidator from '../middleware/validators/productValidator'
 import { uploadImage } from '../services/storage/storage'
+import authValidator from '../middleware/validators/authValidator'
+import authController from '../controllers/authController'
 // import { checkAuth, getUserFromToken } from 'src/network/secure'
 
 const router = express.Router()
 
-/* PRODUCTS */
+// ----------------
+// PRODUCTS
+// ----------------
 
 router.post(
   '/products',
@@ -35,7 +39,9 @@ router.delete(
   productController.deleteProductById
 )
 
-/* USERS */
+// ----------------
+// USERS
+// ----------------
 
 router.post(
   '/users',
@@ -54,6 +60,10 @@ router.put(
   userController.updateUserById
 )
 
-// router.post('/login', validateLogin, login)
+// ----------------
+// AUTH
+// ----------------
+
+router.post('/auth/login', authValidator.validateLogin, authController.login)
 
 export default router

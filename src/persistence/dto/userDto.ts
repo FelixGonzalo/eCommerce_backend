@@ -1,4 +1,4 @@
-import { UserProfileType } from '../../types/UserType'
+import { UserProfileType, UserType } from '../../types/UserType'
 
 export const userProfileDto = (user: any) => {
   const data: UserProfileType = {
@@ -26,7 +26,7 @@ export const userProfilesDto = (users: any) => {
   return data
 }
 
-export const usersDtoForMongo = (users: any) => {
+export const userProfilesDtoForMongo = (users: any) => {
   const data: UserProfileType[] = users.map((user: any) => ({
     id: String(user._id),
     email: user.email,
@@ -39,10 +39,24 @@ export const usersDtoForMongo = (users: any) => {
   return data
 }
 
-export const userDtoForMongo = (user: any) => {
+export const userProfileDtoForMongo = (user: any) => {
   const data: UserProfileType = {
     id: String(user._id),
     email: user.email,
+    name: user.name,
+    address: user.address,
+    phone: user.phone,
+    photo: user.photo,
+    type: user.type,
+  }
+  return data
+}
+
+export const userDtoForMongo = (user: any) => {
+  const data: UserType = {
+    id: String(user._id),
+    email: user.email,
+    password: user.password,
     name: user.name,
     address: user.address,
     phone: user.phone,

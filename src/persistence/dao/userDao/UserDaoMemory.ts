@@ -36,6 +36,15 @@ export default class UserDaoMemory {
     }
   }
 
+  getByEmailForAuth(email: string) {
+    try {
+      const user = this.users.find((user) => user.email === email)
+      return user
+    } catch (error) {
+      throw error
+    }
+  }
+
   save(obj: UserDataType) {
     const newUser: UserType = { ...obj, id: String(this.cont++) }
     this.users.push(newUser)
