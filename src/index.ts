@@ -6,7 +6,7 @@ import express from 'express'
 import config from '../config'
 // import authRouter from './api/auth/routes'
 // import shoppingCartsRouter from './api/shoppingCarts/routes'
-import { handleUnknownRoutes } from './network/errors'
+import { handleUnknownRoutes } from './middleware/routes/handleUnknownRoutes'
 import { errorHandler } from './middleware/errors/errorHandler'
 import swaggerUI from 'swagger-ui-express'
 const swaggerDoc = require('./swagger.json')
