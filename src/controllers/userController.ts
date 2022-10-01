@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import userService from '../business/userService'
+import logger from '../logger'
+import { sendMailToAdmin } from '../services/email/sendMail'
 
 export async function createUser(
   req: Request,
@@ -18,6 +20,16 @@ export async function createUser(
       photo: filename || '',
       type: 'user',
     })
+
+    sendMailToAdmin(
+      'Nuevo registro',
+      `Datos del usuario: \nemail: ${email} \nname: ${name} \naddress: ${address} \nphone: ${phone} \nphoto: ${
+        filename || ''
+      }`
+    ).catch((error) =>
+      logger.error(`[sendMailToAdmin in createUser] ${error.message}`)
+    )
+
     res.status(201).json({ data })
   } catch (error) {
     next(error)
