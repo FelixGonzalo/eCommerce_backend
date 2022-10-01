@@ -3,23 +3,19 @@ import { UserAuthType, UserType } from '../types/UserType'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import config from '../../config'
+import { errorCodes } from '../middleware/errors/errorDictionary'
 
 const userRepository = new UserRepository()
 
 const login = async (user: UserAuthType) => {
   try {
     const foundUser = await userRepository.getByEmailForAuth(user.email)
-
-    if (!foundUser)
-      return { error: 'Wrong credentials', code: 'wrong_credentials' }
-
+    if (!foundUser) throw new Error(errorCodes.WRONG_CREDENTIALS)
     const isCorrectPassword = await bcrypt.compare(
       user.password,
       foundUser.password
     )
-    if (!isCorrectPassword)
-      return { error: 'Wrong credentials', code: 'wrong_credentials' }
-
+    if (!isCorrectPassword) throw new Error(errorCodes.WRONG_CREDENTIALS)
     return { token: createUserToken(foundUser) }
   } catch (error) {
     throw error

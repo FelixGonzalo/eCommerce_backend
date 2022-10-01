@@ -17,11 +17,11 @@ export default class UserRepository {
     return this.dao.getAll()
   }
 
-  async getById(id: string): Promise<UserProfileType> {
+  async getById(id: string): Promise<UserProfileType | null> {
     return this.dao.getById(id)
   }
 
-  async getByEmailForAuth(email: string): Promise<UserType | undefined> {
+  async getByEmailForAuth(email: string): Promise<UserType | null> {
     return this.dao.getByEmailForAuth(email)
   }
 
@@ -29,11 +29,14 @@ export default class UserRepository {
     return this.dao.save(obj)
   }
 
-  async deleteById(id: string): Promise<String> {
-    return this.dao.deleteById(id)
+  async updateById(
+    id: string,
+    newObj: UserEditType
+  ): Promise<UserProfileType | null> {
+    return this.dao.updateById(id, newObj)
   }
 
-  async updateById(id: string, newObj: UserEditType): Promise<UserProfileType> {
-    return this.dao.updateById(id, newObj)
+  async deleteById(id: string): Promise<String | null> {
+    return this.dao.deleteById(id)
   }
 }

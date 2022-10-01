@@ -28,8 +28,9 @@ export default class UserDaoMemory {
 
   getById(id: string) {
     try {
-      const user = this.users[this.getIndex(id)]
-      if (!user) throw new Error('The user does not exist')
+      const index = this.getIndex(id)
+      if (index === -1) return null
+      const user = this.users[index]
       return userProfileDto(user)
     } catch (error) {
       throw error
@@ -54,7 +55,7 @@ export default class UserDaoMemory {
   updateById(id: string, newObj: UserDataType) {
     try {
       const index = this.getIndex(id)
-      if (index === -1) throw new Error('The user does not exist')
+      if (index === -1) return null
       const updatedUser = { ...this.users[index], ...newObj }
       this.users.splice(index, 1, updatedUser)
       return userProfileDto(updatedUser)
@@ -66,8 +67,8 @@ export default class UserDaoMemory {
   deleteById(id: string) {
     try {
       const index = this.getIndex(id)
-      if (index === -1) throw new Error('The user does not exist')
-      this.users.splice(this.getIndex(id), 1)
+      if (index === -1) return null
+      this.users.splice(index, 1)
       return id
     } catch (error) {
       throw error

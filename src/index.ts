@@ -7,7 +7,7 @@ import config from '../config'
 // import authRouter from './api/auth/routes'
 // import shoppingCartsRouter from './api/shoppingCarts/routes'
 import { handleUnknownRoutes } from './network/errors'
-import { errorHandler } from './network/errors'
+import { errorHandler } from './middleware/errors/errorHandler'
 import swaggerUI from 'swagger-ui-express'
 const swaggerDoc = require('./swagger.json')
 import cluster from 'cluster'

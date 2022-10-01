@@ -1,3 +1,4 @@
+import { errorCodes } from '../middleware/errors/errorDictionary'
 import ProductRepository from '../persistence/repository/ProductRepository'
 import { ProductDataType } from '../types/ProductType'
 
@@ -8,12 +9,35 @@ const createProduct = async (product: ProductDataType) =>
 
 const getProducts = async () => productRepository.getAll()
 
-const getProductById = async (id: string) => productRepository.getById(id)
+const getProductById = async (id: string) => {
+  try {
+    const product = await productRepository.getById(id)
+    if (!product) throw new Error(errorCodes.PRODUCT_NOT_FOUND)
+    return product
+  } catch (error) {
+    throw error
+  }
+}
 
-const updateProductById = async (id: string, product: ProductDataType) =>
-  productRepository.updateById(id, product)
+const updateProductById = async (id: string, product: ProductDataType) => {
+  try {
+    const updatedProduct = await productRepository.updateById(id, product)
+    if (!updatedProduct) throw new Error(errorCodes.PRODUCT_NOT_FOUND)
+    return updatedProduct
+  } catch (error) {
+    throw error
+  }
+}
 
-const deleteProductById = async (id: string) => productRepository.deleteById(id)
+const deleteProductById = async (id: string) => {
+  try {
+    const product = await productRepository.deleteById(id)
+    if (!product) throw new Error(errorCodes.PRODUCT_NOT_FOUND)
+    return product
+  } catch (error) {
+    throw error
+  }
+}
 
 export default {
   createProduct,

@@ -43,7 +43,7 @@ export default class UserDaoMongo {
   async getById(id: string) {
     try {
       const user = await this.UserModel.findOne({ _id: id })
-      if (!user) throw new Error('The user does not exist')
+      if (!user) return null
       return userProfileDtoForMongo(user)
     } catch (error) {
       throw error
@@ -53,7 +53,8 @@ export default class UserDaoMongo {
   async getByEmailForAuth(email: string) {
     try {
       const user = await this.UserModel.findOne({ email })
-      return user ? userDtoForMongo(user) : user
+      if (!user) return null
+      return userDtoForMongo(user)
     } catch (error) {
       throw error
     }
@@ -72,7 +73,7 @@ export default class UserDaoMongo {
   async updateById(id: string, newObj: UserEditType) {
     try {
       const user = await this.UserModel.findByIdAndUpdate(id, newObj)
-      if (!user) throw new Error('The user does not exist')
+      if (!user) return null
       return userProfileDtoForMongo({
         id,
         email: user.email,
@@ -87,7 +88,7 @@ export default class UserDaoMongo {
   async deleteById(id: string) {
     try {
       const User = await this.UserModel.findByIdAndDelete(id)
-      if (!User) throw new Error('The User does not exist')
+      if (!User) return null
       return id
     } catch (error) {
       throw error

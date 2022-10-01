@@ -9,7 +9,6 @@ export async function createUser(
   try {
     const { email, password, name, address, phone } = req.body
     const { filename } = req.file ? req.file : { filename: undefined }
-
     const data = await userService.createUser({
       email,
       password,
@@ -19,7 +18,6 @@ export async function createUser(
       photo: filename || '',
       type: 'user',
     })
-
     res.status(201).json({ data })
   } catch (error) {
     next(error)
@@ -49,7 +47,6 @@ async function updateUserById(req: Request, res: Response, next: NextFunction) {
   try {
     const { id, name, address, phone } = req.body
     const { filename } = req.file ? req.file : { filename: undefined }
-
     const data = await userService.updateUserById(id, {
       name,
       address: address || '',

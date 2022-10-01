@@ -40,7 +40,7 @@ export default class ProductDaoMongo {
   async getById(id: string) {
     try {
       const product = await this.ProductModel.findOne({ _id: id })
-      if (!product) throw new Error('The product does not exist')
+      if (!product) return null
       const formattedProduct: ProductType = productDtoForMongo(product)
       return formattedProduct
     } catch (error) {
@@ -56,7 +56,7 @@ export default class ProductDaoMongo {
   async updateById(id: string, newObj: ProductDataType) {
     try {
       const product = await this.ProductModel.findByIdAndUpdate(id, newObj)
-      if (!product) throw new Error('The product does not exist')
+      if (!product) return null
       return { id, ...newObj }
     } catch (error) {
       throw error
@@ -66,7 +66,7 @@ export default class ProductDaoMongo {
   async deleteById(id: string) {
     try {
       const product = await this.ProductModel.findByIdAndDelete(id)
-      if (!product) throw new Error('The product does not exist')
+      if (!product) return null
       return id
     } catch (error) {
       throw error

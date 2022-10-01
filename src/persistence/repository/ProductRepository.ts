@@ -12,7 +12,7 @@ export default class ProductRepository {
     return this.dao.getAll()
   }
 
-  async getById(id: string): Promise<ProductType> {
+  async getById(id: string): Promise<ProductType | null> {
     return this.dao.getById(id)
   }
 
@@ -20,11 +20,14 @@ export default class ProductRepository {
     return this.dao.save(obj)
   }
 
-  async deleteById(id: string): Promise<String> {
-    return this.dao.deleteById(id)
+  async updateById(
+    id: string,
+    newObj: ProductDataType
+  ): Promise<ProductType | null> {
+    return this.dao.updateById(id, newObj)
   }
 
-  async updateById(id: string, newObj: ProductDataType): Promise<ProductType> {
-    return this.dao.updateById(id, newObj)
+  async deleteById(id: string): Promise<String | null> {
+    return this.dao.deleteById(id)
   }
 }

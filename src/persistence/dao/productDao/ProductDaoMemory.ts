@@ -27,9 +27,9 @@ export default class ProductDaoMemory {
 
   getById(id: string) {
     try {
-      const product = this.products[this.getIndex(id)]
-      if (!product) throw new Error('The product does not exist')
-      return product
+      const index = this.getIndex(id)
+      if (index === -1) return null
+      return this.products[index]
     } catch (error) {
       throw error
     }
@@ -44,7 +44,7 @@ export default class ProductDaoMemory {
   updateById(id: string, newObj: ProductDataType) {
     try {
       const index = this.getIndex(id)
-      if (index === -1) throw new Error('The product does not exist')
+      if (index === -1) return null
       const updatedProduct = { ...this.products[index], ...newObj }
       this.products.splice(index, 1, updatedProduct)
       return updatedProduct
@@ -56,8 +56,8 @@ export default class ProductDaoMemory {
   deleteById(id: string) {
     try {
       const index = this.getIndex(id)
-      if (index === -1) throw new Error('The product does not exist')
-      this.products.splice(this.getIndex(id), 1)
+      if (index === -1) return null
+      this.products.splice(index, 1)
       return id
     } catch (error) {
       throw error
