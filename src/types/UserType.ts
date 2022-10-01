@@ -1,4 +1,4 @@
-type userType = 'user' | 'admin' | string
+export type UserRol = 'user' | 'admin'
 
 export type UserType = {
   id: string
@@ -8,7 +8,7 @@ export type UserType = {
   address: string
   phone: string
   photo: string
-  type: userType
+  type: UserRol
 }
 
 export type UserDataType = {
@@ -18,7 +18,7 @@ export type UserDataType = {
   address: string
   phone: string
   photo: string
-  type: userType
+  type: UserRol
 }
 
 export type UserEditType = {
@@ -35,7 +35,7 @@ export type UserProfileType = {
   address: string
   phone: string
   photo: string
-  type: userType
+  type: UserRol
 }
 
 export type UserAuthType = {

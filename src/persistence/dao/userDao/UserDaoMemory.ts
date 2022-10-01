@@ -1,13 +1,25 @@
 import { UserDataType, UserType } from '../../../types/UserType'
 import { userProfileDto, userProfilesDto } from '../../dto/userDto'
+import bcrypt from 'bcrypt'
 
 export default class UserDaoMemory {
   users: UserType[]
   cont: number
 
   constructor() {
-    this.users = []
-    this.cont = 1
+    this.users = [
+      {
+        id: '1',
+        email: 'felixcastro@pruebas.com',
+        password: bcrypt.hashSync('123456', 2),
+        name: 'Felix Castro',
+        address: '',
+        phone: '',
+        photo: '',
+        type: 'admin',
+      },
+    ]
+    this.cont = 2
   }
 
   init() {

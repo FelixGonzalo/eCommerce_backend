@@ -6,7 +6,8 @@ import productValidator from '../middleware/validators/productValidator'
 import { uploadImage } from '../services/storage/storage'
 import authValidator from '../middleware/validators/authValidator'
 import authController from '../controllers/authController'
-// import { checkAuth, getUserFromToken } from 'src/network/secure'
+import { getUserFromToken } from '../middleware/security/getUserFromToken'
+import { checkAuth } from '../middleware/security/checkAuth'
 
 const router = express.Router()
 
@@ -16,8 +17,8 @@ const router = express.Router()
 
 router.post(
   '/products',
-  // getUserFromToken,
-  // checkAuth('admin'),
+  getUserFromToken,
+  checkAuth('admin'),
   productValidator.validateCreate,
   productController.createProduct
 )
@@ -27,15 +28,16 @@ router.get('/products/:id', productController.getProductById)
 
 router.put(
   '/products',
-  // getUserFromToken,
-  // checkAuth('admin'),
-  // validateProduct,
+  getUserFromToken,
+  checkAuth('admin'),
   productValidator.validateUpdate,
   productController.updateProductById
 )
 
 router.delete(
-  '/products/:id' /*, getUserFromToken, checkAuth('admin')*/,
+  '/products/:id',
+  getUserFromToken,
+  checkAuth('admin'),
   productController.deleteProductById
 )
 
@@ -50,12 +52,25 @@ router.post(
   userController.createUser
 )
 
-router.get('/users', userController.getUsers)
-router.get('/users/:id', userController.getUserById)
+router.get(
+  '/users',
+  getUserFromToken,
+  checkAuth('admin'),
+  userController.getUsers
+)
+
+router.get(
+  '/users/:id',
+  getUserFromToken,
+  checkAuth('user'),
+  userController.getUserById
+)
 
 router.put(
   '/users',
   uploadImage.single('photo'),
+  getUserFromToken,
+  checkAuth('user'),
   userValidator.validateUpdate,
   userController.updateUserById
 )
