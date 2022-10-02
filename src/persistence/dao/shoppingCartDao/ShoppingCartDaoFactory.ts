@@ -1,18 +1,19 @@
+import config from '../../../../config'
 import ShoppingCartDaoMemory from './ShoppingCartDaoMemory'
 import ShoppingCartDaoMongo from './ShoppingCartDaoMongo'
 
-const option = 'Mongo'
+const option = config.PERSISTENCE_SYSTEM
 let dao: ShoppingCartDaoMemory | ShoppingCartDaoMongo
 
 switch (option) {
-  case 'Mongo':
+  case 'mongo':
     dao = new ShoppingCartDaoMongo()
     dao.init()
     break
-  // case 'Memory':
-  //   dao = new ShoppingCartDaoMemory()
-  //   dao.init()
-  //   break
+  case 'memory':
+    dao = new ShoppingCartDaoMemory()
+    dao.init()
+    break
   default:
     dao = new ShoppingCartDaoMemory()
     dao.init()

@@ -1,15 +1,16 @@
+import config from '../../../../config'
 import UserDaoMemory from './UserDaoMemory'
 import UserDaoMongo from './UserDaoMongo'
 
-const option = 'Memory'
+const option = config.PERSISTENCE_SYSTEM
 let dao: UserDaoMemory | UserDaoMongo
 
 switch (option) {
-  // case 'Mongo':
-  //   dao = new UserDaoMongo()
-  //   dao.init()
-  //   break
-  case 'Memory':
+  case 'mongo':
+    dao = new UserDaoMongo()
+    dao.init()
+    break
+  case 'memory':
     dao = new UserDaoMemory()
     dao.init()
     break

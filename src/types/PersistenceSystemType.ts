@@ -1,0 +1,1 @@
+type PersistenceSystemType = 'memory' | 'mongo'

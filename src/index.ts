@@ -1,13 +1,16 @@
 require('dotenv').config()
-import './store/mongoDb/connection' // connect to MongoDB
+import config from '../config'
+
+if (config.PERSISTENCE_SYSTEM === 'mongo') {
+  import('./store/mongoDb/connection') // connect to MongoDB
+}
 // import './store/firebase/connection' // connect to Firebase
 
 import express from 'express'
-import config from '../config'
 import { handleUnknownRoutes } from './middleware/routes/handleUnknownRoutes'
 import { errorHandler } from './middleware/errors/errorHandler'
-import swaggerUI from 'swagger-ui-express'
-const swaggerDoc = require('./swagger.json')
+// import swaggerUI from 'swagger-ui-express'
+// const swaggerDoc = require('./swagger.json')
 import cluster from 'cluster'
 import os from 'os'
 import cors from 'cors'
