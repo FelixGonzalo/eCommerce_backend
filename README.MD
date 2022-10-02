@@ -59,6 +59,8 @@ Proyecto backend donde se implementa un API e-commerce para poder vender product
 
 Puedes importar el [archivo de endpoints](./ecommerce_felixcastro.postman_collection.json) para usarlo en Postman o Insomnia.
 
+![endpoint](./endpoints.png)
+
 ## 📦 Estructura de carpetas
 
 ---
