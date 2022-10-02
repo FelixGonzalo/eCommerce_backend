@@ -12,7 +12,7 @@ const shoppingCartRepository = new ShoppingCartRepository()
 
 const createShoppingCart = async (user: UserTokenType) => {
   try {
-    const userProfile = await userService.getUserById(user.id)
+    const userProfile = await userService.getUserById(user.id, user)
     return shoppingCartRepository.save({
       products: [],
       user: userProfile,
@@ -25,10 +25,15 @@ const createShoppingCart = async (user: UserTokenType) => {
 
 const getShoppingCarts = async () => shoppingCartRepository.getAll()
 
-const getShoppingCartById = async (id: string) => {
+const getShoppingCartById = async (id: string, userToken: UserTokenType) => {
   try {
     const shoppingCart = await shoppingCartRepository.getById(id)
     if (!shoppingCart) throw new Error(errorCodes.SHOPPINGCART_NOT_FOUND)
+
+    // -- If the user is not an administrator, you cannot see the data of another user
+    if (userToken.id != shoppingCart.user.id && userToken.type !== 'admin')
+      throw new Error(errorCodes.UNAUTHORIZED)
+
     return shoppingCart
   } catch (error) {
     throw error
@@ -53,10 +58,11 @@ const updateShoppingCartById = async (
 
 const addProductToShoppingCart = async (
   shoppingCartId: string,
-  productId: string
+  productId: string,
+  userToken: UserTokenType
 ) => {
   try {
-    const shoppingCart = await getShoppingCartById(shoppingCartId)
+    const shoppingCart = await getShoppingCartById(shoppingCartId, userToken)
     const product = await productService.getProductById(productId)
 
     // -- If the product exists in the cart it is not added
@@ -70,9 +76,9 @@ const addProductToShoppingCart = async (
   }
 }
 
-const sellShoppingCart = async (id: string) => {
+const sellShoppingCart = async (id: string, userToken: UserTokenType) => {
   try {
-    const shoppingCart = await getShoppingCartById(id)
+    const shoppingCart = await getShoppingCartById(id, userToken)
 
     // -- If the cart has been sold before, it cannot be sold again
     if (shoppingCart.status === 'sold')
@@ -114,10 +120,11 @@ const sellShoppingCart = async (id: string) => {
 
 const deleteProductFromShoppinCart = async (
   shoppingCartId: string,
-  productId: string
+  productId: string,
+  userToken: UserTokenType
 ) => {
   try {
-    const shoppingCart = await getShoppingCartById(shoppingCartId)
+    const shoppingCart = await getShoppingCartById(shoppingCartId, userToken)
 
     // -- If the cart has been sold before, it cannot be deleted
     if (shoppingCart.status === 'sold')
@@ -134,9 +141,9 @@ const deleteProductFromShoppinCart = async (
   }
 }
 
-const deleteShoppingCartById = async (id: string) => {
+const deleteShoppingCartById = async (id: string, userToken: UserTokenType) => {
   try {
-    const shoppingCart = await getShoppingCartById(id)
+    const shoppingCart = await getShoppingCartById(id, userToken)
     if (!shoppingCart) throw new Error(errorCodes.SHOPPINGCART_NOT_FOUND)
 
     // -- If the cart has been sold before, it cannot be deleted

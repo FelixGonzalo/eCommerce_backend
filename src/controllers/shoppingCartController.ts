@@ -36,7 +36,8 @@ export async function getShoppingCartById(
 ) {
   try {
     const { id } = req.params
-    const data = await shoppingCartService.getShoppingCartById(id)
+    const user: UserTokenType = req['user']
+    const data = await shoppingCartService.getShoppingCartById(id, user)
     res.json({ data })
   } catch (error) {
     next(error)
@@ -50,9 +51,11 @@ async function addProductToShoppingCart(
 ) {
   try {
     const { id, id_product } = req.params
+    const user: UserTokenType = req['user']
     const data = await shoppingCartService.addProductToShoppingCart(
       id,
-      id_product
+      id_product,
+      user
     )
     res.json({ data })
   } catch (error) {
@@ -67,7 +70,8 @@ async function sellShoppingCart(
 ) {
   try {
     const { id } = req.params
-    const data = await shoppingCartService.sellShoppingCart(id)
+    const user: UserTokenType = req['user']
+    const data = await shoppingCartService.sellShoppingCart(id, user)
     res.json({ data })
   } catch (error) {
     next(error)
@@ -81,9 +85,11 @@ async function deleteProductFromShoppinCart(
 ) {
   try {
     const { id, id_product } = req.params
+    const user: UserTokenType = req['user']
     const data = await shoppingCartService.deleteProductFromShoppinCart(
       id,
-      id_product
+      id_product,
+      user
     )
     res.json({ data })
   } catch (error) {
@@ -98,7 +104,8 @@ async function deleteShoppingCartById(
 ) {
   try {
     const { id } = req.params
-    const data = await shoppingCartService.deleteShoppingCartById(id)
+    const user: UserTokenType = req['user']
+    const data = await shoppingCartService.deleteShoppingCartById(id, user)
     res.json({ data })
   } catch (error) {
     next(error)

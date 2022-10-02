@@ -5,6 +5,7 @@ export type ErrorMessageType = {
 }
 
 export const errorCodes = {
+  UNAUTHORIZED: 'UNAUTHORIZED',
   TOKEN_INVALID: 'TOKEN_INVALID',
   WRONG_CREDENTIALS: 'WRONG_CREDENTIALS',
   PRODUCT_NOT_FOUND: 'PRODUCT_NOT_FOUND',
@@ -20,6 +21,10 @@ export const errorCodes = {
 }
 
 export const errorMessages = {
+  UNAUTHORIZED: {
+    msg: 'Unauthorized',
+    status: 401,
+  },
   TOKEN_INVALID: {
     msg: 'Token missing or invalid',
     status: 401,
@@ -33,7 +38,7 @@ export const errorMessages = {
     status: 404,
   },
   SHOPPINGCART_HAS_NO_PRODUCTS: {
-    msg: 'the shopping cart has no products',
+    msg: 'The shopping cart has no products',
     status: 404,
   },
   SHOPPINGCART_HAS_STATUS_SOLD_SO_PRODUCTS_CANNOT_BE_DELETED: {

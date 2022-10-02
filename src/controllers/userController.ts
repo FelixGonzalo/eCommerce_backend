@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import userService from '../business/userService'
 import logger from '../logger'
 import { sendMailToAdmin } from '../services/email/sendMail'
+import { UserTokenType } from '../types/UserTokenType'
 
 export async function createUser(
   req: Request,
@@ -48,7 +49,8 @@ async function getUsers(req: Request, res: Response, next: NextFunction) {
 async function getUserById(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = req.params
-    const data = await userService.getUserById(id)
+    const user: UserTokenType = req['user']
+    const data = await userService.getUserById(id, user)
     res.json({ data })
   } catch (error) {
     next(error)
@@ -59,12 +61,17 @@ async function updateUserById(req: Request, res: Response, next: NextFunction) {
   try {
     const { id, name, address, phone } = req.body
     const { filename } = req.file ? req.file : { filename: undefined }
-    const data = await userService.updateUserById(id, {
-      name,
-      address: address || '',
-      phone: phone || '',
-      photo: filename || '',
-    })
+    const user: UserTokenType = req['user']
+    const data = await userService.updateUserById(
+      id,
+      {
+        name,
+        address: address || '',
+        phone: phone || '',
+        photo: filename || '',
+      },
+      user
+    )
     res.json({ data })
   } catch (error) {
     next(error)

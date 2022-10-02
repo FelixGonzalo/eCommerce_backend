@@ -17,7 +17,6 @@ export function getUserFromToken(req, res, next) {
       id: decodedToken.id,
       email: decodedToken.email,
       name: decodedToken.name,
-      phone: decodedToken.phone,
       type: decodedToken.type,
     }
     req.user = user
