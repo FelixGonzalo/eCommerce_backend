@@ -2,19 +2,18 @@ import { ProductDataType, ProductType } from '../../../types/ProductType'
 import mongoose, { Schema, model } from 'mongoose'
 import { productDtoForMongo, productsDtoForMongo } from '../../dto/productDto'
 
+export const productSchema = new Schema<ProductType>({
+  title: String,
+  price: Number,
+  thumbnail: String,
+  description: String,
+  code: String,
+  stock: Number,
+})
 export default class ProductDaoMongo {
   ProductModel: mongoose.Model<ProductType, {}, {}, {}>
 
   constructor() {
-    const productSchema = new Schema<ProductType>({
-      title: String,
-      price: Number,
-      thumbnail: String,
-      description: String,
-      code: String,
-      stock: Number,
-    })
-
     this.ProductModel =
       mongoose.models.Product || model<ProductType>('Product', productSchema)
   }

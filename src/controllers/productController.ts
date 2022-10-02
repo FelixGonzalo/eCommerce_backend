@@ -67,7 +67,6 @@ async function deleteProductById(
   res: Response,
   next: NextFunction
 ) {
-  const { id } = req.params
   try {
     const { id } = req.params
     const data = await productService.deleteProductById(id)

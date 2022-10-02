@@ -6,20 +6,20 @@ import {
   userProfileDtoForMongo,
 } from '../../dto/userDto'
 
+export const userSchema = new Schema<UserType>({
+  email: String,
+  password: String,
+  name: String,
+  address: String,
+  phone: String,
+  photo: String,
+  type: String,
+})
+
 export default class UserDaoMongo {
   UserModel: mongoose.Model<UserType, {}, {}, {}>
 
   constructor() {
-    const userSchema = new Schema<UserType>({
-      email: String,
-      password: String,
-      name: String,
-      address: String,
-      phone: String,
-      photo: String,
-      type: String,
-    })
-
     this.UserModel = mongoose.models.User || model<UserType>('User', userSchema)
   }
 

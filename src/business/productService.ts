@@ -31,9 +31,9 @@ const updateProductById = async (id: string, product: ProductDataType) => {
 
 const deleteProductById = async (id: string) => {
   try {
-    const product = await productRepository.deleteById(id)
-    if (!product) throw new Error(errorCodes.PRODUCT_NOT_FOUND)
-    return product
+    const productId = await productRepository.deleteById(id)
+    if (!productId) throw new Error(errorCodes.PRODUCT_NOT_FOUND)
+    return productId
   } catch (error) {
     throw error
   }
