@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf build",
-    "dev": "ts-node-dev src/index.ts",
-    "start": "node build/src/index.js"
+    "dev": "ts-node-dev src/index.ts mode=development",
+    "start": "node build/src/index.js mode=production"
   },
   "keywords": [],
   "author": "",

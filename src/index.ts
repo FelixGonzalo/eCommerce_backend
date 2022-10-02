@@ -1,4 +1,6 @@
-require('dotenv').config()
+require('dotenv').config({
+  path: `.env.${process.argv[2].split('=')[1] || 'development'}`,
+})
 import config from '../config'
 
 if (config.PERSISTENCE_SYSTEM === 'mongo') {
