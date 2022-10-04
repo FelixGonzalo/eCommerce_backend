@@ -8,6 +8,8 @@ const userRepository = new UserRepository()
 
 const createUser = async (user: UserDataType) => {
   try {
+    const foundUser = await userRepository.getByEmailForAuth(user.email)
+    if (foundUser) throw new Error(errorCodes.USER_ALREADY_EXISTS)
     const passwordHash = await bcrypt.hash(user.password, 2)
     return userRepository.save({ ...user, password: passwordHash })
   } catch (error) {

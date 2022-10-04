@@ -6,6 +6,7 @@ export type ErrorMessageType = {
 
 export const errorCodes = {
   UNAUTHORIZED: 'UNAUTHORIZED',
+  USER_ALREADY_EXISTS: 'USER_ALREADY_EXISTS',
   TOKEN_INVALID: 'TOKEN_INVALID',
   WRONG_CREDENTIALS: 'WRONG_CREDENTIALS',
   PRODUCT_NOT_FOUND: 'PRODUCT_NOT_FOUND',
@@ -24,6 +25,10 @@ export const errorMessages = {
   UNAUTHORIZED: {
     msg: 'Unauthorized',
     status: 401,
+  },
+  USER_ALREADY_EXISTS: {
+    msg: 'The mail user already exists',
+    status: 403,
   },
   TOKEN_INVALID: {
     msg: 'Token missing or invalid',
