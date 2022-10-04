@@ -10,7 +10,7 @@ export default class UserDaoMemory {
     this.users = [
       {
         id: '1',
-        email: 'felixcastro@pruebas.com',
+        email: 'felixcastro@demo.com',
         password: bcrypt.hashSync('123456', 2),
         name: 'Felix Castro',
         address: '',
