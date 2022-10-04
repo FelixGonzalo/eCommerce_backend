@@ -1,0 +1,30 @@
+#NewProduct
+components:
+  requestBodies:
+    NewProduct:
+      type: object
+      required:
+        - title
+        - price
+        - code
+        - stock
+      properties:
+        title:
+          type: string
+        price:
+          type: number
+        thumbnail:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        stock:
+          type: number
+      example:
+        nombre: Teclado
+        price: 80
+        thumbnail: https://via.placeholder.com/300/09f/fff.png
+        description: Teclado negro
+        code: TEC10
+        stock: 10

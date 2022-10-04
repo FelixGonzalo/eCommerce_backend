@@ -1,0 +1,34 @@
+# Products
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - id
+        - title
+        - price
+        - code
+        - stock
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        price:
+          type: number
+        thumbnail:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        stock:
+          type: number
+      example:
+        id: '1'
+        nombre: Teclado
+        price: 80
+        thumbnail: https://via.placeholder.com/300/09f/fff.png
+        description: Teclado negro
+        code: TEC10
+        stock: 10

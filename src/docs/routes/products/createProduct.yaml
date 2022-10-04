@@ -1,0 +1,19 @@
+paths:
+  /api/products:
+    post:
+      tags:
+        - product
+      summary: Create a new product
+      requestBodies:
+        required: true
+        content:
+          application/json:
+            schemas:
+              $ref: '#/components/requestBodies/NewProduct'
+      responses:
+        '201':
+          description: Created product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
