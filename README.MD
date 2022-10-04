@@ -53,11 +53,24 @@ Proyecto backend donde se implementa un API e-commerce para poder vender product
   - business: capa de negocio
   - persistence: capa de persistencia con implementación de repository, dto y dao.
 
-## Prueba todas las opciones de la api en postman
+## Prueba todas las opciones de la api
 
 ---
 
-Puedes importar el [archivo de endpoints](./ecommerce_felixcastro.postman_collection.json) para usarlo en Postman o Insomnia.
+- API de prueba temporal en: https://ecommerce-felixcastro.herokuapp.com/api/products
+
+  - Usuario admin para probar todos los endpoints sin restricciones:
+
+  ```
+  {
+    "email": "felixcastro@demo.com",
+    "password": "123456"
+  }
+  ```
+
+- La documentación en Swagger está en proceso: api/docs
+
+- Puedes importar el [archivo de endpoints](./ecommerce_felixcastro.postman_collection.json) para usarlo en Postman o Insomnia.
 
 ![endpoint](./endpoints.png)
 
