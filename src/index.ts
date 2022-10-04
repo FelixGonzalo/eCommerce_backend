@@ -40,7 +40,6 @@ if (config.API_CLUSTER && cluster.isPrimary) {
       stream: { write: (message) => logger.info(message.trim()) },
     })
   )
-  console.log('swaggerSpecs', swaggerSpecs)
   app.use('/public', express.static('storage'))
   app.use('/api', routes)
   app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
